@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AuthForm from '../containers/AuthForm';
 import StudentRegistrationForm from '../containers/StudentRegistrationForm';
 import AuthPage from '../pages/AuthPage';
+import SpecialtiesPage from '../pages/SpecialtiesPage';
 
 const AppRouter = () => {
   return (
@@ -14,6 +15,7 @@ const AppRouter = () => {
             element={<StudentRegistrationForm />}
           />
         </Route>
+        <Route path="/specialties" element={<SpecialtiesPage />} />
       </Routes>
     </BrowserRouter>
   );

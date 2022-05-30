@@ -3,6 +3,7 @@ import AuthForm from '../containers/AuthForm';
 import StudentRegistrationForm from '../containers/StudentRegistrationForm';
 import AuthPage from '../pages/AuthPage';
 import SpecialtiesPage from '../pages/SpecialtiesPage';
+import UserPage from '../pages/UserPage';
 
 export enum RoutePaths {
   HOME = '/',
@@ -23,6 +24,7 @@ const AppRouter = () => {
           />
         </Route>
         <Route path={RoutePaths.HOME} element={<SpecialtiesPage />} />
+        <Route path={RoutePaths.USER} element={<UserPage />} />
       </Routes>
     </BrowserRouter>
   );

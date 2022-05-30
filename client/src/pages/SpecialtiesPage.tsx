@@ -1,6 +1,6 @@
-import { Container, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useState } from 'react';
-import AppHeader from '../components/AppHeader';
+import PageLayout from '../components/PageLayout';
 import SpecialtyCard from '../components/SpecialtyCard';
 import ApplySpecialtyDialog from '../containers/ApplySpecialtyDialog';
 
@@ -11,9 +11,8 @@ const SpecialtiesPage = () => {
   const closeDialog = () => setOpen(false);
 
   return (
-    <Container maxWidth="md">
+    <PageLayout>
       <ApplySpecialtyDialog open={open} onClose={closeDialog} />
-      <AppHeader />
       <Stack gap={1}>
         <SpecialtyCard onClick={openDialog} />
         <SpecialtyCard onClick={openDialog} />
@@ -21,7 +20,7 @@ const SpecialtiesPage = () => {
         <SpecialtyCard onClick={openDialog} />
         <SpecialtyCard onClick={openDialog} />
       </Stack>
-    </Container>
+    </PageLayout>
   );
 };
 

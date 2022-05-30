@@ -1,6 +1,13 @@
 import { Box, AppBar, Toolbar, Button, Stack } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { RoutePaths } from '../router/AppRouter';
+
+const isActiveStyle: (props: {
+  isActive: boolean;
+}) => React.CSSProperties = ({ isActive }) => ({
+  textDecoration: isActive ? 'underline' : 'none',
+  color: 'inherit',
+});
 
 const AppHeader = () => (
   <Box sx={{ flexGrow: 1 }}>
@@ -9,18 +16,20 @@ const AppHeader = () => (
         <Button
           variant="text"
           sx={{ color: (theme) => theme.palette.common.white }}
-          component={Link}
-          to={RoutePaths.HOME}
+          component="span"
         >
-          главная страница
+          <NavLink style={isActiveStyle} to={RoutePaths.HOME}>
+            главная страница
+          </NavLink>
         </Button>
         <Button
           variant="text"
-          sx={{ color: '#fff' }}
-          component={Link}
-          to={RoutePaths.USER}
+          sx={{ color: (theme) => theme.palette.common.white }}
+          component="span"
         >
-          личный кабинет
+          <NavLink style={isActiveStyle} to={RoutePaths.USER}>
+            личный кабинет
+          </NavLink>
         </Button>
         <Stack direction="row" gap={0.5} sx={{ ml: 'auto' }}>
           <Button

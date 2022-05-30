@@ -5,10 +5,12 @@ import {
   Typography,
   Box,
   Button,
+  Divider,
 } from '@mui/material';
+import React from 'react';
 
 type Props = {
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const SpecialtyCard: React.FC<Props> = ({ onClick }) => (
@@ -58,8 +60,21 @@ const SpecialtyCard: React.FC<Props> = ({ onClick }) => (
       <Button onClick={onClick} sx={{ mt: 2 }} variant="contained">
         подать заявление
       </Button>
+      <Button onClick={onClick} sx={{ mt: 2 }} variant="contained">
+        отозвать заявление
+      </Button>
       {/* CONTROLS */}
     </CardContent>
+    {true && (
+      <>
+        <Divider />
+        <CardContent>
+          <Typography color="primary" fontWeight="600">
+            2 приоритет (средний)
+          </Typography>
+        </CardContent>
+      </>
+    )}
   </Card>
 );
 

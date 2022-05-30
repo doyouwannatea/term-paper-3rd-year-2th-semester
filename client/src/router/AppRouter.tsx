@@ -4,18 +4,25 @@ import StudentRegistrationForm from '../containers/StudentRegistrationForm';
 import AuthPage from '../pages/AuthPage';
 import SpecialtiesPage from '../pages/SpecialtiesPage';
 
+export enum RoutePaths {
+  HOME = '/',
+  WELCOME = '/welcome',
+  STUDENT_REGISTRATION = '/welcome/student-registration',
+  USER = '/user',
+}
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<AuthPage />}>
+        <Route path={RoutePaths.WELCOME} element={<AuthPage />}>
           <Route index element={<AuthForm />} />
           <Route
-            path="student-registration"
+            path={RoutePaths.STUDENT_REGISTRATION}
             element={<StudentRegistrationForm />}
           />
         </Route>
-        <Route path="/specialties" element={<SpecialtiesPage />} />
+        <Route path={RoutePaths.HOME} element={<SpecialtiesPage />} />
       </Routes>
     </BrowserRouter>
   );

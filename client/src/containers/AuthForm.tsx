@@ -1,5 +1,6 @@
 import { Box, Typography, TextField, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { RoutePaths } from '../router/AppRouter';
 
 const AuthForm = () => {
   return (
@@ -17,7 +18,7 @@ const AuthForm = () => {
           авторизоваться
         </Button>
         <Typography variant="body2">или</Typography>
-        <Link to="/student-registration">регистрация</Link>
+        <Link to={RoutePaths.STUDENT_REGISTRATION}>регистрация</Link>
       </Box>
     </Box>
   );

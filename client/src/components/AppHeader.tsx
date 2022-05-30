@@ -1,5 +1,6 @@
-import { Box, AppBar, Toolbar, Button } from '@mui/material';
+import { Box, AppBar, Toolbar, Button, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { RoutePaths } from '../router/AppRouter';
 
 const AppHeader = () => (
   <Box sx={{ flexGrow: 1 }}>
@@ -9,7 +10,7 @@ const AppHeader = () => (
           variant="text"
           sx={{ color: (theme) => theme.palette.common.white }}
           component={Link}
-          to="/specialties"
+          to={RoutePaths.HOME}
         >
           главная страница
         </Button>
@@ -17,13 +18,27 @@ const AppHeader = () => (
           variant="text"
           sx={{ color: '#fff' }}
           component={Link}
-          to="/user"
+          to={RoutePaths.USER}
         >
           личный кабинет
         </Button>
-        <Box ml="auto">
-          <Button color="inherit">Login</Button>
-        </Box>
+        <Stack direction="row" gap={0.5} sx={{ ml: 'auto' }}>
+          <Button
+            component={Link}
+            to={RoutePaths.WELCOME}
+            color="inherit"
+          >
+            войти
+          </Button>
+          <Button
+            component={Link}
+            to={RoutePaths.STUDENT_REGISTRATION}
+            variant="outlined"
+            color="inherit"
+          >
+            регистрация
+          </Button>
+        </Stack>
       </Toolbar>
     </AppBar>
   </Box>

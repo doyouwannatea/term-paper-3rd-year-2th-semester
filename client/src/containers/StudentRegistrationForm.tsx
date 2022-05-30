@@ -1,6 +1,7 @@
 import { Typography, TextField, Button, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 import FileInput from '../components/FileInput';
+import { RoutePaths } from '../router/AppRouter';
 
 const StudentRegistrationForm = () => (
   <Stack gap={1} component="form">
@@ -21,7 +22,7 @@ const StudentRegistrationForm = () => (
         зарегестрироваться
       </Button>
       <Typography variant="body2">или</Typography>
-      <Link to="/">авторизация</Link>
+      <Link to={RoutePaths.WELCOME}>авторизация</Link>
     </Stack>
   </Stack>
 );

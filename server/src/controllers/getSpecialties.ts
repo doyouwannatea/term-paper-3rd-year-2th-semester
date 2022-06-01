@@ -1,10 +1,7 @@
 import { Request, Response } from 'express';
 import { connection } from '..';
-import { Exam } from '../models/Exam';
-import { Specialty } from '../models/Specialty';
-
-type ExamResponce = Pick<Exam, 'exam_name' | 'exam_points'>;
-type SpecialtyResponce = Specialty & { exams: ExamResponce[] };
+import { ExamResponce } from '../models/Exam';
+import { Specialty, SpecialtyResponce } from '../models/Specialty';
 
 export const getSpecialties = async (req: Request, res: Response) => {
   try {

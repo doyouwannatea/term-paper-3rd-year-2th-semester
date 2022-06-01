@@ -1,9 +1,10 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import mysql from 'mysql2';
 import { connect, disconnect } from './database/connection';
 import { auth } from './controllers/auth';
 import { register } from './controllers/register';
+import { getSpecialties } from './controllers/getSpecialties';
 dotenv.config();
 
 const app = express();
@@ -19,6 +20,7 @@ export const connection = mysql
 app.use(express.json());
 app.post('/auth', auth);
 app.post('/register', register);
+app.get('/specialties', getSpecialties);
 
 app
   .listen(process.env.PORT, () => {

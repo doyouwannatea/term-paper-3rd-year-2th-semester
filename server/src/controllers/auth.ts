@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { connection } from '..';
 import { selectExamsByStudentId } from '../database/selectors/selectExamsByStudentId';
 import { selectStudentData } from '../database/selectors/selectStudentData';
+import { selectStudentDocs } from '../database/selectors/selectStudentDocs';
 
 export const auth = async (req: Request, res: Response) => {
   try {
@@ -23,6 +24,10 @@ export const auth = async (req: Request, res: Response) => {
       connection,
       student.student_id
     );
+    const docs = await selectStudentDocs(
+      connection,
+      student.student_id
+    );
 
     const { student_password, ...studentData } = student;
     res
@@ -34,7 +39,7 @@ export const auth = async (req: Request, res: Response) => {
         maxAge: 900000,
         httpOnly: true,
       })
-      .json({ ...studentData, exams });
+      .json({ ...studentData, exams, docs });
   } catch (error) {
     console.log(error);
     res.send('server error').status(500);

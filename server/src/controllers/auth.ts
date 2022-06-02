@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { connection } from '..';
-import { ExamResponce } from '../models/Exam';
-import { Student } from '../models/Student';
+import { selectExamsByStudentId } from '../database/selectors/selectExamsByStudentId';
+import { selectStudentData } from '../database/selectors/selectStudentData';
 
 export const auth = async (req: Request, res: Response) => {
   try {
@@ -9,25 +9,29 @@ export const auth = async (req: Request, res: Response) => {
     if (!email || !password)
       return res.send('Нет авторизационных данных').status(400);
 
-    const studentList = (
-      await connection.query(
-        `SELECT * FROM students 
-    WHERE student_email=? AND student_password=?`,
-        [email, password]
-      )
-    )[0] as Student[];
+    const studentList = await selectStudentData(
+      connection,
+      email,
+      password
+    );
     const student = studentList[0];
 
     if (!student) return res.send('Студент не найден!').status(400);
 
-    const exams = (
-      await connection.query(
-        'SELECT * FROM exams WHERE student_id=?',
-        [student.student_id]
-      )
-    )[0] as ExamResponce[];
+    const exams = await selectExamsByStudentId(
+      connection,
+      student.student_id
+    );
 
     const { student_password, ...studentData } = student;
+    res.cookie('password', password, {
+      maxAge: 900000,
+      httpOnly: true,
+    });
+    res.cookie('email', email, {
+      maxAge: 900000,
+      httpOnly: true,
+    });
     res.json({ ...studentData, exams });
   } catch (error) {
     console.log(error);

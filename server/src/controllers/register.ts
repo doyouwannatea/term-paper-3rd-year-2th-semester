@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
-import { OkPacket } from 'mysql2/promise';
 import { connection } from '..';
-import { Student } from '../models/Student';
+import { insertStudentData } from '../database/inserts/insertStudentData';
+import { insertStudentPassport } from '../database/inserts/insertStudentPassport';
+import { insertStudentPhoto } from '../database/inserts/insertStudentPhoto';
+import { selectStudentData } from '../database/selectors/selectStudentData';
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -10,14 +12,12 @@ export const register = async (req: Request, res: Response) => {
     if (!email || !password)
       return res.send('Нет авторизационных данных').status(400);
 
-    const dbStudentRes = await connection.query(
-      `SELECT * FROM students 
-          WHERE student_email=? AND student_password=?`,
-      [email, password]
+    const studentList = await selectStudentData(
+      connection,
+      email,
+      password
     );
-
-    const student = (dbStudentRes[0] as Student[])[0];
-    if (student)
+    if (studentList.length > 0)
       return res.send('Студент уже зарегестрирован!').status(400);
 
     // проверка пасспорта и фотографии
@@ -26,28 +26,18 @@ export const register = async (req: Request, res: Response) => {
     if (!photo) return res.send('Нет фото 3х4').status(400);
 
     // занесение пользователя в БД
-    const [registeredStudent] = await connection.query(
-      `
-        INSERT INTO students (
-            students.entered,
-            students.entry_year,
-            students.student_email,
-            students.student_password
-        ) VALUES (?, ?, ?, ?);`,
-      [false, 0, email, password]
+    const { insertId } = await insertStudentData(
+      connection,
+      false,
+      0,
+      email,
+      password
     );
 
-    const { insertId } = registeredStudent as OkPacket;
-    await connection.query(
-      `INSERT INTO documents (student_id, doc_name, doc_image) VALUES (?, ?, ?)`,
-      [insertId, 'passport', passport]
-    );
-    await connection.query(
-      `INSERT INTO documents (student_id, doc_name, doc_image) VALUES (?, ?, ?)`,
-      [insertId, 'photo3x4', photo]
-    );
+    await insertStudentPassport(connection, insertId, photo);
+    await insertStudentPhoto(connection, insertId, photo);
 
-    res.send('ok');
+    res.json({ status: 'success' });
   } catch (error) {
     console.log(error);
     res.send('server error').status(500);

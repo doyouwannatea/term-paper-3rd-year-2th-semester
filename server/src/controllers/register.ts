@@ -34,7 +34,7 @@ export const register = async (req: Request, res: Response) => {
       password
     );
 
-    await insertStudentPassport(connection, insertId, photo);
+    await insertStudentPassport(connection, insertId, passport);
     await insertStudentPhoto(connection, insertId, photo);
 
     res.json({ status: 'success' });

@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mysql from 'mysql2';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import { connect, disconnect } from './database/connection';
 import { auth } from './controllers/auth';
 import { register } from './controllers/register';
@@ -24,6 +25,7 @@ export const connection = mysql
 // middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
 // auth | register
 app.post('/auth', auth);

@@ -5,7 +5,8 @@ import { selectStudentData } from '../database/selectors/selectStudentData';
 
 export const auth = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const email = req.body.email || req.cookies.email;
+    const password = req.body.password || req.cookies.password;
     if (!email || !password)
       return res.send('Нет авторизационных данных').status(400);
 
@@ -24,15 +25,16 @@ export const auth = async (req: Request, res: Response) => {
     );
 
     const { student_password, ...studentData } = student;
-    res.cookie('password', password, {
-      maxAge: 900000,
-      httpOnly: true,
-    });
-    res.cookie('email', email, {
-      maxAge: 900000,
-      httpOnly: true,
-    });
-    res.json({ ...studentData, exams });
+    res
+      .cookie('password', password, {
+        maxAge: 900000,
+        httpOnly: true,
+      })
+      .cookie('email', email, {
+        maxAge: 900000,
+        httpOnly: true,
+      })
+      .json({ ...studentData, exams });
   } catch (error) {
     console.log(error);
     res.send('server error').status(500);

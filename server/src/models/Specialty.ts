@@ -1,4 +1,5 @@
 import { ExamResponce } from './Exam';
+import { SpecialtyApplication } from './SpecialtyApplication';
 
 export interface Specialty {
   specialty_code: string;
@@ -8,3 +9,6 @@ export interface Specialty {
 }
 
 export type SpecialtyResponce = Specialty & { exams: ExamResponce[] };
+export type StudentSpecialtyResponce = SpecialtyResponce & {
+  application: SpecialtyApplication;
+};

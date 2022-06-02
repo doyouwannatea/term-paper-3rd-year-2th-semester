@@ -3,79 +3,102 @@ import {
   CardContent,
   Stack,
   Typography,
-  Box,
   Button,
   Divider,
 } from '@mui/material';
-import React from 'react';
+import { useAppSelector } from '../hooks/useAppRedux';
+import { Priority, PriorityText } from '../models/Priority';
+import { Specialty } from '../models/Specialty';
+import { countForm } from '../utils/string';
+import ExamList from './ExamList';
 
 type Props = {
-  onClick?: () => void;
+  onClick?: (specialty: Specialty) => void;
+  specialty: Specialty;
+  priority?: Priority;
 };
 
-const SpecialtyCard: React.FC<Props> = ({ onClick }) => (
-  <Card variant="outlined">
-    <CardContent>
-      {/* HEADER */}
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Typography variant="h5">
-          Информационные системы и технологии
-        </Typography>
-        <Typography variant="caption">09.03.02</Typography>
-      </Stack>
-      {/* HEADER */}
+const SpecialtyCard: React.FC<Props> = ({
+  onClick,
+  specialty,
+  priority,
+}) => {
+  const studentData = useAppSelector(
+    (state) => state.specialty.studentData
+  );
 
-      {/* BODY */}
-      <Typography variant="subtitle2">
-        Институт информационных технологий и анализа данных
-      </Typography>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="flex-end"
-      >
-        <Box
-          sx={{ listStylePosition: 'inside', marginBlock: 1, p: 0 }}
-          component="ul"
+  return (
+    <Card variant="outlined">
+      <CardContent>
+        {/* HEADER */}
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          <Typography variant="body1" component="li">
-            Профильная математика - <b>60 баллов</b>
+          <Typography variant="h5">
+            {specialty.specialty_name}
           </Typography>
-          <Typography variant="body1" component="li">
-            Русский язык - <b>56 баллов</b>
+          <Typography variant="caption">
+            {specialty.specialty_code}
           </Typography>
-          <Typography variant="body1" component="li">
-            Информатика - <b>70 баллов</b>
-          </Typography>
-        </Box>
-        <Typography variant="caption">78 мест</Typography>
-      </Stack>
-      {/* BODY */}
+        </Stack>
+        {/* HEADER */}
 
-      {/* CONTROLS */}
-      <Button onClick={onClick} sx={{ mt: 2 }} variant="contained">
-        подать заявление
-      </Button>
-      <Button onClick={onClick} sx={{ mt: 2 }} variant="contained">
-        отозвать заявление
-      </Button>
-      {/* CONTROLS */}
-    </CardContent>
-    {true && (
-      <>
-        <Divider />
-        <CardContent>
-          <Typography color="primary" fontWeight="600">
-            2 приоритет (средний)
+        {/* BODY */}
+        <Typography variant="subtitle2">
+          {specialty.institute_name}
+        </Typography>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="flex-end"
+        >
+          <ExamList exams={specialty.exams} />
+          <Typography variant="caption">
+            {specialty.max_students}{' '}
+            {countForm(specialty.max_students, [
+              'место',
+              'места',
+              'мест',
+            ])}
           </Typography>
-        </CardContent>
-      </>
-    )}
-  </Card>
-);
+        </Stack>
+        {/* BODY */}
+
+        {/* CONTROLS */}
+        {!priority && studentData && (
+          <Button
+            onClick={() => onClick && onClick(specialty)}
+            sx={{ mt: 2 }}
+            variant="contained"
+          >
+            подать заявление
+          </Button>
+        )}
+        {priority && studentData && (
+          <Button
+            onClick={() => onClick && onClick(specialty)}
+            sx={{ mt: 2 }}
+            variant="contained"
+          >
+            отозвать заявление
+          </Button>
+        )}
+        {/* CONTROLS */}
+      </CardContent>
+      {priority && (
+        <>
+          <Divider />
+          <CardContent>
+            <Typography color="primary" fontWeight="600">
+              {priority} приоритет ({PriorityText[priority]})
+            </Typography>
+          </CardContent>
+        </>
+      )}
+    </Card>
+  );
+};
 
 export default SpecialtyCard;

@@ -7,6 +7,7 @@ const isActiveStyle: (props: {
 }) => React.CSSProperties = ({ isActive }) => ({
   textDecoration: isActive ? 'underline' : 'none',
   color: 'inherit',
+  padding: '6px 8px',
 });
 
 const AppHeader = () => (
@@ -15,7 +16,10 @@ const AppHeader = () => (
       <Toolbar>
         <Button
           variant="text"
-          sx={{ color: (theme) => theme.palette.common.white }}
+          sx={{
+            color: (theme) => theme.palette.common.white,
+            padding: 0,
+          }}
           component="span"
         >
           <NavLink style={isActiveStyle} to={RoutePaths.HOME}>
@@ -24,7 +28,10 @@ const AppHeader = () => (
         </Button>
         <Button
           variant="text"
-          sx={{ color: (theme) => theme.palette.common.white }}
+          sx={{
+            color: (theme) => theme.palette.common.white,
+            padding: 0,
+          }}
           component="span"
         >
           <NavLink style={isActiveStyle} to={RoutePaths.USER}>

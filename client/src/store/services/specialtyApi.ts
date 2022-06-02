@@ -43,6 +43,9 @@ export const specialtyApi = createApi({
     getSpecialties: builder.query<Specialty[], void>({
       query: () => 'specialties',
     }),
+    getStudentSpecialties: builder.query<Specialty[], void>({
+      query: () => 'student/specialties',
+    }),
   }),
 });
 

@@ -5,12 +5,11 @@ import {
   Button,
   Alert,
 } from '@mui/material';
-import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../router/AppRouter';
-import { useAuthMutation } from '../store/services/specialty';
+import { useAuthMutation } from '../store/services/specialtyApi';
 
 const AuthForm = () => {
   const navigate = useNavigate();

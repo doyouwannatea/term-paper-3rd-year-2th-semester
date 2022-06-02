@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Specialty } from '../../models/Specialty';
 import { StudentData } from '../../models/StudentData';
-import { specialtyApi } from '../services/specialty';
+import { specialtyApi } from '../services/specialtyApi';
 
 export interface SpecialtyState {
   activeSpecialty?: Specialty;

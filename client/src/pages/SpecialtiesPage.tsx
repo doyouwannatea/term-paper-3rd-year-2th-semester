@@ -6,7 +6,7 @@ import ApplySpecialtyDialog from '../containers/ApplySpecialtyDialog';
 import { useAppDispatch } from '../hooks/useAppRedux';
 import { Specialty } from '../models/Specialty';
 import { setActiveSpecialty } from '../store/features/specialtySlice';
-import { useGetSpecialtiesQuery } from '../store/services/specialty';
+import { useGetSpecialtiesQuery } from '../store/services/specialtyApi';
 
 const SpecialtiesPage = () => {
   const dispatch = useAppDispatch();

@@ -3,7 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import specialtyReducer, {
   specialtySlice,
 } from './features/specialtySlice';
-import { specialtyApi } from './services/specialty';
+import { specialtyApi } from './services/specialtyApi';
 
 export const store = configureStore({
   reducer: {

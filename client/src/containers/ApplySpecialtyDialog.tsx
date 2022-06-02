@@ -18,7 +18,7 @@ import { useState } from 'react';
 import ExamsTable from '../components/ExamsTable';
 import { useAppSelector } from '../hooks/useAppRedux';
 import { Priority } from '../models/Priority';
-import { useSendSpecialtyApplicationMutation } from '../store/services/specialty';
+import { useSendSpecialtyApplicationMutation } from '../store/services/specialtyApi';
 
 const ApplySpecialtyDialog: React.FC<DialogProps> = (props) => {
   const [

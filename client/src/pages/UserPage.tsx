@@ -26,11 +26,19 @@ const UserPageTitle: React.FC<{ children: React.ReactNode }> = ({
 
 const UserData: React.FC<{
   exams: Exam[];
-}> = ({ exams }) => (
+  email: string;
+}> = ({ exams, email }) => (
   <Box component="section">
     <UserPageTitle>Ваши данные</UserPageTitle>
     <Grid container spacing={2}>
       {/* Документ, удостоверяющий личность */}
+      <Grid item xs={4}>
+        <Typography variant="body1">Email</Typography>
+      </Grid>
+      <Grid item xs={8}>
+        {email}
+      </Grid>
+
       <Grid item xs={4}>
         <Typography variant="body1">
           Документ, удостоверяющий личность
@@ -100,7 +108,10 @@ const UserPage = () => {
 
   return (
     <PageLayout>
-      <UserData exams={studentData?.exams || []} />
+      <UserData
+        email={studentData?.student_email || ''}
+        exams={studentData?.exams || []}
+      />
       {isLoading && 'загрузка...'}
       {studentSpicialities && !isLoading && (
         <UserSpecialties

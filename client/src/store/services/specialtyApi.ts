@@ -7,8 +7,8 @@ import { Specialty, StudentSpecialty } from '../../models/Specialty';
 import { StudentData } from '../../models/StudentData';
 
 type AuthRequest = {
-  password?: string;
-  email?: string;
+  password: string;
+  email: string;
 };
 
 type SendSpecialtyApplicationRequest = {
@@ -28,9 +28,20 @@ export const specialtyApi = createApi({
     credentials: 'include',
   }),
   endpoints: (builder) => ({
-    auth: builder.mutation<StudentData, AuthRequest>({
+    auth: builder.mutation<StudentData, Partial<AuthRequest>>({
       query: (userData) => ({
         url: 'auth',
+        body: userData,
+        method: 'POST',
+      }),
+      invalidatesTags: ['getStudentSpecialties'],
+    }),
+    register: builder.mutation<
+      { status: string },
+      Required<AuthRequest>
+    >({
+      query: (userData) => ({
+        url: 'register',
         body: userData,
         method: 'POST',
       }),
@@ -75,4 +86,5 @@ export const {
   useSendSpecialtyApplicationMutation,
   useGetStudentSpecialtiesQuery,
   useDeleteSpecialtyApplicationMutation,
+  useRegisterMutation,
 } = specialtyApi;

@@ -3,7 +3,7 @@ import {
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
 import { Priority } from '../../models/Priority';
-import { Specialty } from '../../models/Specialty';
+import { Specialty, StudentSpecialty } from '../../models/Specialty';
 import { StudentData } from '../../models/StudentData';
 
 type AuthRequest = {
@@ -16,8 +16,13 @@ type SendSpecialtyApplicationRequest = {
   specialty_code: string;
 };
 
+type DeleteSpecialtyApplicationRequest = {
+  specialty_code: string;
+};
+
 export const specialtyApi = createApi({
   reducerPath: 'specialtyApi',
+  tagTypes: ['getStudentSpecialties'],
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:8000/',
     credentials: 'include',
@@ -39,12 +44,25 @@ export const specialtyApi = createApi({
         body: data,
         method: 'POST',
       }),
+      invalidatesTags: ['getStudentSpecialties'],
     }),
     getSpecialties: builder.query<Specialty[], void>({
       query: () => 'specialties',
     }),
-    getStudentSpecialties: builder.query<Specialty[], void>({
+    getStudentSpecialties: builder.query<StudentSpecialty[], void>({
       query: () => 'student/specialties',
+      providesTags: ['getStudentSpecialties'],
+    }),
+    deleteSpecialtyApplication: builder.mutation<
+      { status: string },
+      DeleteSpecialtyApplicationRequest
+    >({
+      query: (data) => ({
+        url: 'specialties',
+        method: 'DELETE',
+        body: data,
+      }),
+      invalidatesTags: ['getStudentSpecialties'],
     }),
   }),
 });
@@ -55,4 +73,6 @@ export const {
   useGetSpecialtiesQuery,
   useAuthMutation,
   useSendSpecialtyApplicationMutation,
+  useGetStudentSpecialtiesQuery,
+  useDeleteSpecialtyApplicationMutation,
 } = specialtyApi;

@@ -7,3 +7,15 @@ export interface Specialty {
   institute_name: string;
   exams: Exam[];
 }
+
+export interface SpecialtyApplication {
+  student_id: number;
+  specialty_code: string;
+  application_status: string;
+  application_priority: number;
+  application_time: Date;
+}
+
+export interface StudentSpecialty extends Specialty {
+  application: SpecialtyApplication;
+}

@@ -1,3 +1,4 @@
+import { Document } from './Document';
 import { Exam } from './Exam';
 
 export interface StudentData {
@@ -6,4 +7,5 @@ export interface StudentData {
   entered: boolean;
   student_email: string;
   exams: Exam[];
+  docs: Document[];
 }

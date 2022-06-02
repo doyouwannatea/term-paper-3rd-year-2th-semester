@@ -1,6 +1,14 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
+import ExamList from '../components/ExamList';
 import PageLayout from '../components/PageLayout';
 import SpecialtyCard from '../components/SpecialtyCard';
+import { useAppSelector } from '../hooks/useAppRedux';
+import { Exam } from '../models/Exam';
+import { Specialty, StudentSpecialty } from '../models/Specialty';
+import {
+  useDeleteSpecialtyApplicationMutation,
+  useGetStudentSpecialtiesQuery,
+} from '../store/services/specialtyApi';
 
 const UserPageTitle: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -16,7 +24,9 @@ const UserPageTitle: React.FC<{ children: React.ReactNode }> = ({
   </Typography>
 );
 
-const UserData = () => (
+const UserData: React.FC<{
+  exams: Exam[];
+}> = ({ exams }) => (
   <Box component="section">
     <UserPageTitle>Ваши данные</UserPageTitle>
     <Grid container spacing={2}>
@@ -55,40 +65,51 @@ const UserData = () => (
         <Typography variant="body1">Результаты экзаменов</Typography>
       </Grid>
       <Grid item xs={8}>
-        <Box
-          sx={{ listStylePosition: 'inside', marginBlock: 1, p: 0 }}
-          component="ul"
-        >
-          <Typography variant="body1" component="li">
-            Профильная математика - <b>60 баллов</b>
-          </Typography>
-          <Typography variant="body1" component="li">
-            Русский язык - <b>56 баллов</b>
-          </Typography>
-          <Typography variant="body1" component="li">
-            Информатика - <b>70 баллов</b>
-          </Typography>
-        </Box>
+        <ExamList exams={exams} />
       </Grid>
     </Grid>
   </Box>
 );
 
-const UserSpecialties = () => (
+const UserSpecialties: React.FC<{
+  studentSpicialities: StudentSpecialty[];
+  onSpecClick: (specialty: Specialty) => void;
+}> = ({ studentSpicialities, onSpecClick }) => (
   <Box component="section">
     <UserPageTitle>Ваши заявления на специальности</UserPageTitle>
     <Stack gap={1}>
-      <SpecialtyCard />
-      <SpecialtyCard />
+      {studentSpicialities.map((spec) => (
+        <SpecialtyCard
+          key={spec.specialty_code}
+          specialty={spec}
+          priority={spec.application.application_priority}
+          onClick={onSpecClick}
+        />
+      ))}
     </Stack>
   </Box>
 );
 
 const UserPage = () => {
+  const [deleteSpec] = useDeleteSpecialtyApplicationMutation();
+  const { isLoading, data: studentSpicialities } =
+    useGetStudentSpecialtiesQuery();
+  const studentData = useAppSelector(
+    (state) => state.specialty.studentData
+  );
+
   return (
     <PageLayout>
-      <UserData />
-      <UserSpecialties />
+      <UserData exams={studentData?.exams || []} />
+      {isLoading && 'загрузка...'}
+      {studentSpicialities && !isLoading && (
+        <UserSpecialties
+          onSpecClick={(spec) => {
+            deleteSpec({ specialty_code: spec.specialty_code });
+          }}
+          studentSpicialities={studentSpicialities}
+        />
+      )}
     </PageLayout>
   );
 };

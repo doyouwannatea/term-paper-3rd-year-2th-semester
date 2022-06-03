@@ -1,9 +1,15 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import AuthForm from '../containers/AuthForm';
 import StudentRegistrationForm from '../containers/StudentRegistrationForm';
 import AuthPage from '../pages/AuthPage';
 import SpecialtiesPage from '../pages/SpecialtiesPage';
 import UserPage from '../pages/UserPage';
+import RequiredAuth from './RequiredAuth';
 
 export enum RoutePaths {
   HOME = '/',
@@ -24,7 +30,14 @@ const AppRouter = () => {
           />
         </Route>
         <Route path={RoutePaths.HOME} element={<SpecialtiesPage />} />
-        <Route path={RoutePaths.USER} element={<UserPage />} />
+        <Route
+          path={RoutePaths.USER}
+          element={
+            <RequiredAuth>
+              <UserPage />
+            </RequiredAuth>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

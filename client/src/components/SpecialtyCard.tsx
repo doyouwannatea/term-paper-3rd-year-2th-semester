@@ -5,6 +5,7 @@ import {
   Typography,
   Button,
   Divider,
+  Alert,
 } from '@mui/material';
 import { useAppSelector } from '../hooks/useAppRedux';
 import { Priority, PriorityText } from '../models/Priority';
@@ -16,12 +17,14 @@ type Props = {
   onClick?: (specialty: Specialty) => void;
   specialty: Specialty;
   priority?: Priority;
+  status?: string;
 };
 
 const SpecialtyCard: React.FC<Props> = ({
   onClick,
   specialty,
   priority,
+  status,
 }) => {
   const studentData = useAppSelector(
     (state) => state.specialty.studentData
@@ -87,13 +90,16 @@ const SpecialtyCard: React.FC<Props> = ({
         )}
         {/* CONTROLS */}
       </CardContent>
-      {priority && (
+      {priority && status && (
         <>
           <Divider />
           <CardContent>
-            <Typography color="primary" fontWeight="600">
-              {priority} приоритет ({PriorityText[priority]})
-            </Typography>
+            <Alert severity="info">
+              {priority} приоритет ({PriorityText[priority]}):{' '}
+              <Typography variant="caption" fontWeight="600">
+                {status}
+              </Typography>
+            </Alert>
           </CardContent>
         </>
       )}

@@ -91,6 +91,7 @@ const UserSpecialties: React.FC<{
           key={spec.specialty_code}
           specialty={spec}
           priority={spec.application.application_priority}
+          status={spec.application.application_status}
           onClick={onSpecClick}
         />
       ))}

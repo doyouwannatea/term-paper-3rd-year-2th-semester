@@ -31,7 +31,9 @@ const SpecialtyCard: React.FC<Props> = ({
 
   return (
     <Card variant="outlined">
-      <CardContent>
+      <CardContent
+        sx={(theme) => ({ bgcolor: theme.palette.grey[50] })}
+      >
         {/* HEADER */}
         <Stack
           direction="row"

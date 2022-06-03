@@ -1,5 +1,6 @@
 import { Box, Paper } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
+import { RoutePaths } from '../router/AppRouter';
 
 const AuthPage = () => (
   <Box
@@ -11,6 +12,7 @@ const AuthPage = () => (
     }}
   >
     <Paper sx={{ p: 4, width: '100%', maxWidth: 500 }}>
+      <Link to={RoutePaths.HOME}>на главную страницу</Link>
       <Outlet />
     </Paper>
   </Box>

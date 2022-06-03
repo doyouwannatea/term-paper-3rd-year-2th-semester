@@ -10,6 +10,7 @@ import { getSpecialties } from './controllers/getSpecialties';
 import { sendSpecialtyApplication } from './controllers/sendSpecialtyApplication';
 import { deleteSpecialtyApplication } from './controllers/deleteSpecialtyApplication';
 import { getStudentSpecialties } from './controllers/getStudentSpecialties';
+import { logout } from './controllers/logout';
 dotenv.config();
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 // auth | register
 app.post('/auth', auth);
 app.post('/register', register);
+app.post('/logout', logout);
 
 // specialties
 app.get('/specialties', getSpecialties);

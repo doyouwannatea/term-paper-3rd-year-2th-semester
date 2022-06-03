@@ -36,6 +36,12 @@ export const specialtyApi = createApi({
       }),
       invalidatesTags: ['getStudentSpecialties'],
     }),
+    logout: builder.mutation<{ status: string }, void>({
+      query: () => ({
+        url: 'logout',
+        method: 'POST',
+      }),
+    }),
     register: builder.mutation<
       { status: string },
       Required<AuthRequest>
@@ -87,4 +93,5 @@ export const {
   useGetStudentSpecialtiesQuery,
   useDeleteSpecialtyApplicationMutation,
   useRegisterMutation,
+  useLogoutMutation,
 } = specialtyApi;

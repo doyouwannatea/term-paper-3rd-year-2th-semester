@@ -1,4 +1,12 @@
-import { Box, AppBar, Toolbar, Button, Stack } from '@mui/material';
+import {
+  Box,
+  AppBar,
+  Toolbar,
+  Button,
+  Stack,
+  Typography,
+  Divider,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 import NavButton from '../components/NavButton';
 import { useAppSelector } from '../hooks/useAppRedux';
@@ -18,7 +26,12 @@ const AppHeader = () => {
           {studentData && (
             <NavButton to={RoutePaths.USER}>личный кабинет</NavButton>
           )}
-          <Stack direction="row" gap={0.5} sx={{ ml: 'auto' }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            gap={0.5}
+            sx={{ ml: 'auto' }}
+          >
             {!studentData && (
               <>
                 <Button
@@ -39,15 +52,29 @@ const AppHeader = () => {
               </>
             )}
             {studentData && (
-              <Button
-                onClick={async () => {
-                  await logout();
-                  window.location.reload();
-                }}
-                color="inherit"
-              >
-                выйти
-              </Button>
+              <>
+                <Typography variant="body2">
+                  {studentData.student_email}
+                </Typography>
+                <Divider
+                  sx={(theme) => ({
+                    borderColor: theme.palette.primary.contrastText,
+                    ml: 1,
+                    opacity: 0.4,
+                  })}
+                  flexItem
+                  orientation="vertical"
+                />
+                <Button
+                  onClick={async () => {
+                    await logout();
+                    window.location.reload();
+                  }}
+                  color="inherit"
+                >
+                  выйти
+                </Button>
+              </>
             )}
           </Stack>
         </Toolbar>

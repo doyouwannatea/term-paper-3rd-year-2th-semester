@@ -18,6 +18,10 @@ import { useState } from 'react';
 import ExamsTable from '../components/ExamsTable';
 import { useAppSelector } from '../hooks/useAppRedux';
 import { Priority } from '../models/Priority';
+import {
+  selectActiveSpecialty,
+  selectStudentData,
+} from '../store/features/specialtySelectors';
 import { useSendSpecialtyApplicationMutation } from '../store/services/specialtyApi';
 
 const ApplySpecialtyDialog: React.FC<DialogProps> = (props) => {
@@ -26,12 +30,8 @@ const ApplySpecialtyDialog: React.FC<DialogProps> = (props) => {
     { isError, error, isLoading, isSuccess, reset },
   ] = useSendSpecialtyApplicationMutation();
   const [priority, setPriority] = useState<Priority | ''>('');
-  const studentData = useAppSelector(
-    (state) => state.specialty.studentData
-  );
-  const activeSpecialty = useAppSelector(
-    (state) => state.specialty.activeSpecialty
-  );
+  const studentData = useAppSelector(selectStudentData);
+  const activeSpecialty = useAppSelector(selectActiveSpecialty);
 
   async function applySpecialty() {
     if (!priority || !activeSpecialty?.specialty_code) return;

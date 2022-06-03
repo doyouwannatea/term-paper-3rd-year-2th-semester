@@ -5,6 +5,7 @@ import SpecialtyCard from '../components/SpecialtyCard';
 import { useAppSelector } from '../hooks/useAppRedux';
 import { Exam } from '../models/Exam';
 import { Specialty, StudentSpecialty } from '../models/Specialty';
+import { selectStudentData } from '../store/features/specialtySelectors';
 import {
   useDeleteSpecialtyApplicationMutation,
   useGetStudentSpecialtiesQuery,
@@ -103,9 +104,7 @@ const UserPage = () => {
   const [deleteSpec] = useDeleteSpecialtyApplicationMutation();
   const { isLoading, data: studentSpicialities } =
     useGetStudentSpecialtiesQuery();
-  const studentData = useAppSelector(
-    (state) => state.specialty.studentData
-  );
+  const studentData = useAppSelector(selectStudentData);
 
   return (
     <PageLayout>

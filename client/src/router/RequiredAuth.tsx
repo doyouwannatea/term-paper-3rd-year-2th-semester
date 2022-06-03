@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../hooks/useAppRedux';
+import { selectStudentData } from '../store/features/specialtySelectors';
 import { RoutePaths } from './AppRouter';
 
 type Props = {
@@ -7,9 +8,7 @@ type Props = {
 };
 
 const RequiredAuth: React.FC<Props> = ({ children }) => {
-  const studentData = useAppSelector(
-    (state) => state.specialty.studentData
-  );
+  const studentData = useAppSelector(selectStudentData);
   if (!studentData) {
     return <Navigate to={RoutePaths.HOME} />;
   }

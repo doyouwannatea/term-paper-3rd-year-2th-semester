@@ -10,6 +10,7 @@ import {
 import { useAppSelector } from '../hooks/useAppRedux';
 import { Priority, PriorityText } from '../models/Priority';
 import { Specialty } from '../models/Specialty';
+import { selectStudentData } from '../store/features/specialtySelectors';
 import { countForm } from '../utils/string';
 import ExamList from './ExamList';
 
@@ -26,9 +27,7 @@ const SpecialtyCard: React.FC<Props> = ({
   priority,
   status,
 }) => {
-  const studentData = useAppSelector(
-    (state) => state.specialty.studentData
-  );
+  const studentData = useAppSelector(selectStudentData);
 
   return (
     <Card variant="outlined">

@@ -15,8 +15,7 @@ const AuthForm = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [auth, { isError, isLoading, error, data: studentData }] =
-    useAuthMutation();
+  const [auth, { isError, isLoading, error }] = useAuthMutation();
 
   async function submitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();

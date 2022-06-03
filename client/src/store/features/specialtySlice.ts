@@ -6,11 +6,13 @@ import { specialtyApi } from '../services/specialtyApi';
 export interface SpecialtyState {
   activeSpecialty?: Specialty;
   studentData?: StudentData;
+  loading: boolean;
 }
 
 const initialState: SpecialtyState = {
   studentData: undefined,
   activeSpecialty: undefined,
+  loading: true,
 };
 
 export const specialtySlice = createSlice({
@@ -23,9 +25,22 @@ export const specialtySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
+      specialtyApi.endpoints.auth.matchPending,
+      (state) => {
+        state.loading = true;
+      }
+    );
+    builder.addMatcher(
       specialtyApi.endpoints.auth.matchFulfilled,
       (state, { payload }) => {
         state.studentData = payload;
+        state.loading = false;
+      }
+    );
+    builder.addMatcher(
+      specialtyApi.endpoints.auth.matchRejected,
+      (state) => {
+        state.loading = false;
       }
     );
   },

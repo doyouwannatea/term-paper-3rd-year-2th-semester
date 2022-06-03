@@ -35,19 +35,16 @@ const ApplySpecialtyDialog: React.FC<DialogProps> = (props) => {
 
   async function applySpecialty() {
     if (!priority || !activeSpecialty?.specialty_code) return;
-    try {
-      await sendApplication({
-        application_priority: priority,
-        specialty_code: activeSpecialty.specialty_code,
-      }).unwrap();
-    } catch (error) {
-      console.log(error);
-    }
+    await sendApplication({
+      application_priority: priority,
+      specialty_code: activeSpecialty.specialty_code,
+    });
   }
 
   function onClose() {
     if (props.onClose) {
       props.onClose({}, 'backdropClick');
+      setPriority('');
       reset();
     }
   }

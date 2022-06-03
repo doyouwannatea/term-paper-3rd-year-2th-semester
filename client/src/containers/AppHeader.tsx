@@ -1,54 +1,25 @@
 import { Box, AppBar, Toolbar, Button, Stack } from '@mui/material';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import NavButton from '../components/NavButton';
 import { useAppSelector } from '../hooks/useAppRedux';
 import { RoutePaths } from '../router/AppRouter';
 import { selectStudentData } from '../store/features/specialtySelectors';
 import { useLogoutMutation } from '../store/services/specialtyApi';
 
-const isActiveStyle: (props: {
-  isActive: boolean;
-}) => React.CSSProperties = ({ isActive }) => ({
-  textDecoration: isActive ? 'underline' : 'none',
-  color: 'inherit',
-  padding: '6px 8px',
-});
-
 const AppHeader = () => {
-  const [logout, { isLoading }] = useLogoutMutation();
+  const [logout] = useLogoutMutation();
   const studentData = useAppSelector(selectStudentData);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Button
-            variant="text"
-            sx={{
-              color: (theme) => theme.palette.common.white,
-              padding: 0,
-            }}
-            component="span"
-          >
-            <NavLink style={isActiveStyle} to={RoutePaths.HOME}>
-              главная страница
-            </NavLink>
-          </Button>
+          <NavButton to={RoutePaths.HOME}>главная страница</NavButton>
           {studentData && (
-            <Button
-              variant="text"
-              sx={{
-                color: (theme) => theme.palette.common.white,
-                padding: 0,
-              }}
-              component="span"
-            >
-              <NavLink style={isActiveStyle} to={RoutePaths.USER}>
-                личный кабинет
-              </NavLink>
-            </Button>
+            <NavButton to={RoutePaths.USER}>личный кабинет</NavButton>
           )}
           <Stack direction="row" gap={0.5} sx={{ ml: 'auto' }}>
-            {!studentData && !isLoading && (
+            {!studentData && (
               <>
                 <Button
                   component={Link}
@@ -67,7 +38,7 @@ const AppHeader = () => {
                 </Button>
               </>
             )}
-            {studentData && !isLoading && (
+            {studentData && (
               <Button
                 onClick={async () => {
                   await logout();

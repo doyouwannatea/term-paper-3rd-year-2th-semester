@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import AppHeader from './AppHeader';
+import AppHeader from '../containers/AppHeader';
 
 type Props = {
   children: React.ReactNode;

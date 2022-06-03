@@ -12,15 +12,15 @@ import {
 } from '@mui/material';
 import { Exam } from '../models/Exam';
 
+const borderRight: SxProps<Theme> = (theme) => ({
+  borderRight: `1px solid ${theme.palette.grey[200]}`,
+});
+
 type Props = {
   sx?: SxProps<Theme>;
   studentExams: Exam[];
   requiredExams: Exam[];
 };
-
-const borderRight: SxProps<Theme> = (theme) => ({
-  borderRight: `1px solid ${theme.palette.grey[200]}`,
-});
 
 const ExamsTable: React.FC<Props> = ({
   sx,
@@ -38,22 +38,24 @@ const ExamsTable: React.FC<Props> = ({
       const studentExam = studentExams.find(
         (studentExam) => studentExam.exam_name === exam.exam_name
       );
-      if (!studentExam) {
-        return warnings.push(
-          <Alert key={exam.exam_name} severity="warning">
-            у вас отсутствуют результаты экзамена{' '}
-            <b>{exam.exam_name}</b>
-          </Alert>
-        );
-      }
-      if (studentExam.exam_points < exam.exam_points) {
-        return warnings.push(
-          <Alert key={exam.exam_name} severity="warning">
-            у вас меньше необходимого количества баллов по предмету{' '}
-            <b>{exam.exam_name}</b>
-          </Alert>
-        );
-      }
+      const msg: JSX.Element | null = !studentExam ? (
+        <>
+          у вас отсутствуют результаты экзамена{' '}
+          <b>{exam.exam_name}</b>
+        </>
+      ) : studentExam.exam_points < exam.exam_points ? (
+        <>
+          у вас меньше необходимого количества баллов по предмету{' '}
+          <b>{exam.exam_name}</b>
+        </>
+      ) : null;
+
+      if (!msg) return;
+      return warnings.push(
+        <Alert key={exam.exam_name} severity="warning">
+          {msg}
+        </Alert>
+      );
     });
     return warnings;
   };

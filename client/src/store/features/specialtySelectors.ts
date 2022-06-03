@@ -5,3 +5,6 @@ export const selectStudentData = (state: RootState) =>
 
 export const selectActiveSpecialty = (state: RootState) =>
   state.specialty.activeSpecialty;
+
+export const selectLoading = (state: RootState) =>
+  state.specialty.loading;

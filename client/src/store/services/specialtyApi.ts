@@ -20,6 +20,10 @@ type DeleteSpecialtyApplicationRequest = {
   specialty_code: string;
 };
 
+type Status = {
+  status: string;
+};
+
 export const specialtyApi = createApi({
   reducerPath: 'specialtyApi',
   tagTypes: ['getStudentSpecialties'],
@@ -28,64 +32,76 @@ export const specialtyApi = createApi({
     credentials: 'include',
   }),
   endpoints: (builder) => ({
+    // <QUERIES>
+    // get specialties
+    getSpecialties: builder.query<Specialty[], void>({
+      query: () => 'specialties',
+    }),
+
+    // get student specialties
+    getStudentSpecialties: builder.query<StudentSpecialty[], void>({
+      query: () => 'student/specialties',
+      providesTags: ['getStudentSpecialties'],
+    }),
+    // </QUERIES>
+
+    // <MUTATIONS>
+    // auth
     auth: builder.mutation<StudentData, Partial<AuthRequest>>({
-      query: (userData) => ({
+      query: (body) => ({
         url: 'auth',
-        body: userData,
         method: 'POST',
+        body,
       }),
       invalidatesTags: ['getStudentSpecialties'],
     }),
-    logout: builder.mutation<{ status: string }, void>({
+
+    // logout
+    logout: builder.mutation<Status, void>({
       query: () => ({
         url: 'logout',
         method: 'POST',
       }),
     }),
-    register: builder.mutation<
-      { status: string },
-      Required<AuthRequest>
-    >({
-      query: (userData) => ({
+
+    // register
+    register: builder.mutation<Status, Required<AuthRequest>>({
+      query: (body) => ({
         url: 'register',
-        body: userData,
         method: 'POST',
+        body,
       }),
     }),
+
+    // send specialty application
     sendSpecialtyApplication: builder.mutation<
-      { status: string },
+      Status,
       SendSpecialtyApplicationRequest
     >({
-      query: (data) => ({
+      query: (body) => ({
         url: 'specialties',
-        body: data,
         method: 'POST',
+        body,
       }),
       invalidatesTags: ['getStudentSpecialties'],
     }),
-    getSpecialties: builder.query<Specialty[], void>({
-      query: () => 'specialties',
-    }),
-    getStudentSpecialties: builder.query<StudentSpecialty[], void>({
-      query: () => 'student/specialties',
-      providesTags: ['getStudentSpecialties'],
-    }),
+
+    // delete specialty application
     deleteSpecialtyApplication: builder.mutation<
-      { status: string },
+      Status,
       DeleteSpecialtyApplicationRequest
     >({
-      query: (data) => ({
+      query: (body) => ({
         url: 'specialties',
         method: 'DELETE',
-        body: data,
+        body,
       }),
       invalidatesTags: ['getStudentSpecialties'],
     }),
+    // </MUTATIONS>
   }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export const {
   useGetSpecialtiesQuery,
   useAuthMutation,

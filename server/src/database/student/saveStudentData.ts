@@ -1,6 +1,6 @@
 import { Connection, OkPacket } from 'mysql2/promise';
 
-export async function insertStudentData(
+export async function saveStudentData(
   connection: Connection,
   entered: boolean,
   entryYear: number,

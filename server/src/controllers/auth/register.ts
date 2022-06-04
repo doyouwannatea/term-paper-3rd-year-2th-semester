@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { connection } from '..';
-import { insertStudentData } from '../database/inserts/insertStudentData';
-import { selectStudentData } from '../database/selectors/selectStudentData';
+import { connection } from '../..';
+import { saveStudentData } from '../../database/student/saveStudentData';
+import { selectStudentData } from '../../database/student/selectStudentData';
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -19,7 +19,7 @@ export const register = async (req: Request, res: Response) => {
       return res.send('Студент уже зарегистрирован!').status(400);
 
     // занесение пользователя в БД
-    await insertStudentData(connection, false, 0, email, password);
+    await saveStudentData(connection, false, 0, email, password);
 
     res.json({ status: 'success' });
   } catch (error) {

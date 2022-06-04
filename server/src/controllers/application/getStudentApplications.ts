@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import { connection } from '..';
-import { selectExamsBySpecCode } from '../database/selectors/selectExamsBySpecCode';
-import { selectSpecialty } from '../database/selectors/selectSpecialies';
-import { selectStudentData } from '../database/selectors/selectStudentData';
-import { selectStudentSpecialies } from '../database/selectors/selectStudentSpecialies';
-import { StudentSpecialtyResponce } from '../models/Specialty';
+import { connection } from '../..';
+import { selectExamsBySpecCode } from '../../database/exam/selectExamsBySpecCode';
+import { selectSpecialty } from '../../database/specialty/selectSpecialies';
+import { selectStudentData } from '../../database/student/selectStudentData';
+import { selectStudentSpecialies } from '../../database/student/selectStudentSpecialies';
+import { StudentSpecialtyResponce } from '../../models/Specialty';
 
-export const getStudentSpecialties = async (
+export const getStudentApplications = async (
   req: Request,
   res: Response
 ) => {

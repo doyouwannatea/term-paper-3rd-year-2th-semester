@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { connection } from '..';
-import { insertStudentApplication } from '../database/inserts/insertStudentApplication';
-import { selectStudentData } from '../database/selectors/selectStudentData';
-import { selectStudentSpecialies } from '../database/selectors/selectStudentSpecialies';
+import { connection } from '../..';
+import { saveApplication } from '../../database/application/saveApplication';
+import { selectStudentData } from '../../database/student/selectStudentData';
+import { selectStudentSpecialies } from '../../database/student/selectStudentSpecialies';
 
-export const sendSpecialtyApplication = async (
+export const sendApplication = async (
   req: Request,
   res: Response
 ) => {
@@ -50,7 +50,7 @@ export const sendSpecialtyApplication = async (
         .send('Вы уже подавали заявление с таким приоритетом!')
         .status(400);
 
-    await insertStudentApplication(
+    await saveApplication(
       connection,
       student.student_id,
       specialty_code,

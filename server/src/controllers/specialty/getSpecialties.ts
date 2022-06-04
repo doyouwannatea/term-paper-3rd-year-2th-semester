@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { connection } from '..';
-import { selectExamsBySpecCode } from '../database/selectors/selectExamsBySpecCode';
-import { selectSpecialies } from '../database/selectors/selectSpecialies';
-import { SpecialtyResponce } from '../models/Specialty';
+import { connection } from '../..';
+import { selectExamsBySpecCode } from '../../database/exam/selectExamsBySpecCode';
+import { selectSpecialies } from '../../database/specialty/selectSpecialies';
+import { SpecialtyResponce } from '../../models/Specialty';
 
 export const getSpecialties = async (req: Request, res: Response) => {
   try {

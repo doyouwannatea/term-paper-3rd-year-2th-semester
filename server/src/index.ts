@@ -4,13 +4,13 @@ import mysql from 'mysql2';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { connect, disconnect } from './database/connection';
-import { auth } from './controllers/auth';
-import { register } from './controllers/register';
-import { getSpecialties } from './controllers/getSpecialties';
-import { sendSpecialtyApplication } from './controllers/sendSpecialtyApplication';
-import { deleteSpecialtyApplication } from './controllers/deleteSpecialtyApplication';
-import { getStudentSpecialties } from './controllers/getStudentSpecialties';
-import { logout } from './controllers/logout';
+import { auth } from './controllers/auth/auth';
+import { register } from './controllers/auth/register';
+import { getSpecialties } from './controllers/specialty/getSpecialties';
+import { sendApplication } from './controllers/application/sendApplication';
+import { deleteApplication } from './controllers/application/deleteApplication';
+import { getStudentApplications } from './controllers/application/getStudentApplications';
+import { logout } from './controllers/auth/logout';
 dotenv.config();
 
 const app = express();
@@ -28,18 +28,18 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
-// auth | register
+// auth
 app.post('/auth', auth);
 app.post('/register', register);
 app.post('/logout', logout);
 
 // specialties
 app.get('/specialties', getSpecialties);
-app.post('/specialties', sendSpecialtyApplication);
-app.delete('/specialties', deleteSpecialtyApplication);
 
 // student
-app.get('/student/specialties', getStudentSpecialties);
+app.get('/student/specialties', getStudentApplications);
+app.post('/specialties', sendApplication);
+app.delete('/specialties', deleteApplication);
 
 app
   .listen(process.env.PORT, () => {

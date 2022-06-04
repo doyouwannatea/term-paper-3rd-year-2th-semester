@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { connection } from '..';
-import { deleteStudentApplication as deleteStudentApplicationFromDb } from '../database/deletions/deleteSpecialtyApplication';
-import { selectStudentData } from '../database/selectors/selectStudentData';
+import { connection } from '../..';
+import { deleteApplication as deleteStudentApplicationFromDb } from '../../database/application/deleteApplication';
+import { selectStudentData } from '../../database/student/selectStudentData';
 
-export const deleteSpecialtyApplication = async (
+export const deleteApplication = async (
   req: Request,
   res: Response
 ) => {

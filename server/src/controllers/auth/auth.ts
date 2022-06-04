@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { connection } from '..';
-import { selectExamsByStudentId } from '../database/selectors/selectExamsByStudentId';
-import { selectStudentData } from '../database/selectors/selectStudentData';
-import { selectStudentDocs } from '../database/selectors/selectStudentDocs';
+import { connection } from '../..';
+import { selectExamsByStudentId } from '../../database/exam/selectExamsByStudentId';
+import { selectStudentData } from '../../database/student/selectStudentData';
+import { selectStudentDocs } from '../../database/student/selectStudentDocs';
 
 export const auth = async (req: Request, res: Response) => {
   try {

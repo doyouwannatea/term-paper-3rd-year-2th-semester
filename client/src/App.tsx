@@ -7,7 +7,7 @@ const App = () => {
   const [auth] = useAuthMutation();
 
   useEffect(() => {
-    auth({});
+    auth();
   }, []);
 
   return (

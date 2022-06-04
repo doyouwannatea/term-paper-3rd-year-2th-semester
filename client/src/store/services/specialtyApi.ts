@@ -47,7 +47,7 @@ export const specialtyApi = createApi({
 
     // <MUTATIONS>
     // auth
-    auth: builder.mutation<StudentData, Partial<AuthRequest>>({
+    auth: builder.mutation<StudentData, AuthRequest | void>({
       query: (body) => ({
         url: 'auth',
         method: 'POST',

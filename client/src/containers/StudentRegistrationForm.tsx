@@ -5,7 +5,6 @@ import {
   Stack,
   Alert,
 } from '@mui/material';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import FileInput from '../components/FileInput';
@@ -14,6 +13,7 @@ import {
   useAuthMutation,
   useRegisterMutation,
 } from '../store/services/specialtyApi';
+import { handleQueryError } from '../utils/error';
 
 const StudentRegistrationForm = () => {
   const navigate = useNavigate();
@@ -72,9 +72,7 @@ const StudentRegistrationForm = () => {
       <FileInput label="фото документа удостоверяющего личость" />
       <FileInput label="фото 3x4" />
       {isError && (
-        <Alert severity="error">
-          {String((error as FetchBaseQueryError)?.data)}
-        </Alert>
+        <Alert severity="error">{handleQueryError(error)}</Alert>
       )}
       {!isError && warning && (
         <Alert severity="warning">{warning}</Alert>

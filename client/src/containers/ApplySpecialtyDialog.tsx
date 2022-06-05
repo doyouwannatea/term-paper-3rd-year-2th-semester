@@ -13,7 +13,6 @@ import {
   DialogProps,
   Alert,
 } from '@mui/material';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useState } from 'react';
 import ExamsTable from '../components/ExamsTable';
 import { useAppSelector } from '../hooks/useAppRedux';
@@ -23,6 +22,7 @@ import {
   selectStudentData,
 } from '../store/features/specialtySelectors';
 import { useSendSpecialtyApplicationMutation } from '../store/services/specialtyApi';
+import { handleQueryError } from '../utils/error';
 
 const ApplySpecialtyDialog: React.FC<DialogProps> = (props) => {
   const [
@@ -88,9 +88,7 @@ const ApplySpecialtyDialog: React.FC<DialogProps> = (props) => {
           </RadioGroup>
         </FormControl>
         {isError && (
-          <Alert severity="error">
-            {String((error as FetchBaseQueryError)?.data)}
-          </Alert>
+          <Alert severity="error">{handleQueryError(error)}</Alert>
         )}
         {isSuccess && <Alert>заявка на проект успешно подана!</Alert>}
       </DialogContent>

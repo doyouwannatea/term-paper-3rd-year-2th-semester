@@ -5,11 +5,11 @@ import {
   Button,
   Alert,
 } from '@mui/material';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../router/AppRouter';
 import { useAuthMutation } from '../store/services/specialtyApi';
+import { handleQueryError } from '../utils/error';
 
 const AuthForm = () => {
   const navigate = useNavigate();
@@ -53,9 +53,7 @@ const AuthForm = () => {
         variant="outlined"
       />
       {isError && (
-        <Alert severity="error">
-          {String((error as FetchBaseQueryError)?.data)}
-        </Alert>
+        <Alert severity="error">{handleQueryError(error)}</Alert>
       )}
       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
         <Button
